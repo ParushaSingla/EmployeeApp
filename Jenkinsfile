@@ -3,6 +3,7 @@ pipeline {
     tools
     {
     	maven 'MAVEN_HOME'
+    	jdk 'JDK 13'
     }
     stages {
        stage('Checkout'){
