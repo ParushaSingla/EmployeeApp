@@ -8,7 +8,7 @@ pipeline {
        stage('Checkout'){
           steps {
              echo 'build in from master branch'
-              git scm
+              git 'https://github.com/ParushaSingla/EmployeeApp.git'
           }
        }
        stage('Build'){
