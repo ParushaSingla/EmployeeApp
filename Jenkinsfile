@@ -32,5 +32,24 @@ pipeline {
             }
           }
        }
+       stage('Upload to Artifactory'){
+          steps{
+            echo 'Artifactory.. '
+            rtMavenDeployer(
+            id:'deployer',
+            serverId:'parusha.singla',
+            releaseRepo:'pipeline_2020',
+            snapshotRepo:'pipeline_2020',
+            )
+            rtMavenRun(
+            pom:'pom.xml',
+            goals:'clean install',
+            deployerId:'deployer'
+            )
+            rtPublishBuildInfo(
+            serverId:'parusha.singla'         
+            )
+          }
+       }
     }
 }
