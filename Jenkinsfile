@@ -8,7 +8,7 @@ pipeline {
        stage('Checkout'){
           steps {
              echo 'build in from master branch'
-              git checkout scm
+              git scm
           }
        }
        stage('Build'){
