@@ -3,6 +3,7 @@ pipeline {
     tools
     {
     	maven 'MAVEN_HOME'
+    	registryCredential = 'dockerhub_id' 
     	jdk 'JDK 13'
     }
     stages {
@@ -19,7 +20,14 @@ pipeline {
        }
         stage('Push to DTR'){
          steps{
-          bat "docker push  parushasingla/devopssampleapplication_coe_devops:${BUILD_NUMBER}"
+          script { 
+
+                    docker.withRegistry( '', registryCredential ) { 
+                     bat "docker push  parushasingla/devopssampleapplication_coe_devops:${BUILD_NUMBER}"
+                    }
+
+                } 
+         
            }
        }
     }
