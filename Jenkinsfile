@@ -18,22 +18,16 @@ pipeline {
           }
        }
    
-        stage('Building our image') { 
-            steps { 
-                script { 
-                    dockerImage = docker.build registry + ":$BUILD_NUMBER" 
-                }
-            } 
-        }
-        stage('Deploy our image') { 
-            steps { 
-                script { 
-                    docker.withRegistry( '', registryCredential ) { 
-                        dockerImage.push() 
-                    }
-                } 
-            }
-        } 
+     stage('Docker Image'){
+         steps{
+          bat "docker build -t parushasingla/devopssampleapplication_coe_devops:${BUILD_NUMBER} . --no-cache -f Dockerfile"
+           }
+       }
+        stage('Push to DTR'){
+         steps{
+          bat "docker push parushasingla/devopssampleapplication_coe_devops:${BUILD_NUMBER}"
+           }
+       }
         stage('Cleaning up') { 
             steps { 
                 bat "docker rmi $registry:$BUILD_NUMBER" 
