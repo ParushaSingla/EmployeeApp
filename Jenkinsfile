@@ -17,9 +17,14 @@ pipeline {
               git 'https://github.com/ParushaSingla/EmployeeApp.git'
           }
        }
-   
+       stage('Docker Login'){
+         steps{
+          bat "docker login -u parushasingla -p Shivani@12"
+           }
+       }
      stage('Docker Image'){
          steps{
+          echo registryCredential
           bat "docker build -t parushasingla/devopssampleapplication_coe_devops:${BUILD_NUMBER} . --no-cache -f Dockerfile"
            }
        }
