@@ -6,7 +6,9 @@ pipeline {
     	jdk 'JDK 13'
     }
     environment { 
-    registryCredential='dockerhub_id' 
+        registry = "parushasingla/devopssampleapplication_coe_devops" 
+        registryCredential = 'dockerhub_id' 
+        dockerImage = ''
     }
     stages {
        stage('Checkout'){
@@ -15,22 +17,27 @@ pipeline {
               git 'https://github.com/ParushaSingla/EmployeeApp.git'
           }
        }
-       stage('Docker Image'){
-         steps{
-          bat "docker build -t parushasingla/devopssampleapplication_coe_devops:${BUILD_NUMBER} . --no-cache -f Dockerfile"
-           }
-       }
-        stage('Push to DTR'){
-         steps{
-          script { 
-
+   
+        stage('Building our image') { 
+            steps { 
+                script { 
+                    dockerImage = docker.build registry + ":$BUILD_NUMBER" 
+                }
+            } 
+        }
+        stage('Deploy our image') { 
+            steps { 
+                script { 
                     docker.withRegistry( '', registryCredential ) { 
-                     bat "docker push  parushasingla/devopssampleapplication_coe_devops:${BUILD_NUMBER}"
+                        dockerImage.push() 
                     }
-
                 } 
-         
-           }
-       }
+            }
+        } 
+        stage('Cleaning up') { 
+            steps { 
+                bat "docker rmi $registry:$BUILD_NUMBER" 
+            }
+        } 
     }
 }
