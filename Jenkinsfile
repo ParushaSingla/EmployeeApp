@@ -6,7 +6,7 @@ pipeline {
     	jdk 'JDK 13'
     }
     environment { 
-    registryCredential 'dockerhub_id' 
+    registryCredential='dockerhub_id' 
     }
     stages {
        stage('Checkout'){
