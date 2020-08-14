@@ -3,8 +3,10 @@ pipeline {
     tools
     {
     	maven 'MAVEN_HOME'
-    	registryCredential 'dockerhub_id' 
     	jdk 'JDK 13'
+    }
+    environment { 
+    registryCredential 'dockerhub_id' 
     }
     stages {
        stage('Checkout'){
