@@ -52,5 +52,15 @@ pipeline {
             )
           }
        }
+       stage('Docker Image'){
+         steps{
+          bat "/bin/docker build -t parushasingla/devopssampleapplication_coe_devops:${BUILD_NUMBER} --no-cache -f Dockerfile"
+           }
+       }
+        stage('Push to DTR'){
+         steps{
+          bat "/bin/docker push -t parushasingla/devopssampleapplication_coe_devops:${BUILD_NUMBER}"
+           }
+       }
     }
 }
