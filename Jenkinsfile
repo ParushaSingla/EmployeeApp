@@ -19,7 +19,7 @@ pipeline {
        }
         stage('Push to DTR'){
          steps{
-          bat "docker push -t parushasingla/devopssampleapplication_coe_devops:${BUILD_NUMBER}"
+          bat "docker push  parushasingla/devopssampleapplication_coe_devops:${BUILD_NUMBER}"
            }
        }
     }
